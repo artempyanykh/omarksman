@@ -1,0 +1,4 @@
+(tests
+ (names marksman_test)
+ (package marksman)
+ (libraries alcotest marksman))

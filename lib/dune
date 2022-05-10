@@ -1,0 +1,4 @@
+(library
+ (name marksman)
+ (public_name marksman)
+ (libraries))
