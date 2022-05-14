@@ -1,4 +1,6 @@
 (tests
  (names marksman_test)
  (package marksman)
- (libraries alcotest marksman))
+ (libraries alcotest marksman)
+ (flags
+  (:standard -w +A-48-42-44-70 -warn-error +A-3-70)))
