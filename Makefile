@@ -9,7 +9,7 @@ all:
 
 .PHONY: deps
 deps: ## Install development dependencies
-	opam install -y dune-release ocamlformat utop ocaml-lsp-server
+	opam install -y dune-release ocamlformat ocamlformat-rpc utop ocaml-lsp-server
 	opam install --deps-only --with-test --with-doc -y .
 
 .PHONY: create_switch
@@ -19,7 +19,7 @@ create_switch: ## Create an opam switch without any dependency
 .PHONY: switch
 switch: ## Create an opam switch and install development dependencies
 	opam install . --deps-only --with-doc --with-test
-	opam install -y dune-release ocamlformat utop ocaml-lsp-server
+	opam install -y dune-release ocamlformat ocamlformat-rpc utop ocaml-lsp-server
 
 .PHONY: lock
 lock: ## Generate a lock file
