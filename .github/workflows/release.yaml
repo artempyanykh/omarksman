@@ -22,7 +22,7 @@ jobs:
           - runner: macos-latest
             exe: marksman
         ocaml-compiler:
-          - 4.12.x
+          - 4.13.x
 
     steps:
       - name: Checkout code
