@@ -9,20 +9,21 @@
 
 (license ISC)
 
-(authors
-  "Artem Pianykh")
+(authors "Artem Pianykh")
 
-(maintainers
-  "Artem Pianykh")
+(maintainers "Artem Pianykh")
 
 (generate_opam_files true)
 
 (package
  (name marksman)
- (synopsis "Markdown LSP server for easy note-taking with cross-references and diagnostics")
- (description "Markdown LSP server for easy note-taking with cross-references and diagnostics")
+ (synopsis
+  "Markdown LSP server for easy note-taking with cross-references and diagnostics")
+ (description
+  "Markdown LSP server for easy note-taking with cross-references and diagnostics")
  (depends
-  (ocaml (>= 4.08.0))
+  (ocaml
+   (>= 4.14.0))
   dune
   (alcotest :with-test)
   (odoc :with-doc)

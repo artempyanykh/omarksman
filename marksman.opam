@@ -11,7 +11,7 @@ homepage: "https://github.com/artempyanykh/marksman"
 doc: "https://artempyanykh.github.io/marksman/"
 bug-reports: "https://github.com/artempyanykh/marksman/issues"
 depends: [
-  "ocaml" {>= "4.08.0"}
+  "ocaml" {>= "4.14.0"}
   "dune"
   "alcotest" {with-test}
   "odoc" {with-doc}
