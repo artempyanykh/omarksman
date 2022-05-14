@@ -1,0 +1,90 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Release name'
+        required: true
+
+jobs:
+  build:
+    name: Build the release on ${{ matrix.os.runner }}
+    runs-on: ${{ matrix.os.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - runner: windows-latest
+            exe: marksman.exe
+          - runner: ubuntu-latest
+            exe: marksman
+          - runner: macos-latest
+            exe: marksman
+        ocaml-compiler:
+          - 4.12.x
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+          dune-cache: ${{ matrix.os != 'macos-latest' }}
+
+      - name: Install ocamlformat
+        run: opam install ocamlformat.0.18.0
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+
+      - name: Install opam packages
+        run: opam install . --with-test
+
+      - name: Run build
+        run: make build
+
+      - name: Upload the binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os.runner }}-${{ matrix.os.exe }}
+          path: _build/default/bin/main.exe
+          if-no-files-found: error
+  
+  release:
+    name: Create the release for ${{ matrix.os.runner }}
+    needs: build
+    runs-on: ${{ matrix.os.runner }}
+    strategy:
+      matrix:
+        os:
+          - runner: windows-latest
+            exe: marksman.exe
+            release_exe: marksman.exe
+          - runner: ubuntu-latest
+            exe: marksman
+            release_exe: marksman-linux
+          - runner: macos-latest
+            exe: marksman
+            release_exe: marksman-macos
+    steps:
+      - id: download
+        name: Download the release binary
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ matrix.os.runner }}-${{ matrix.os.exe }}
+
+      - name: Rename the binary
+        shell: python
+        run: |
+          import os
+          os.rename("${{ matrix.os.exe }}", "${{ matrix.os.release_exe }}")
+      - name: Create a GH release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ matrix.os.release_exe }}
+          name: ${{ github.event.inputs.name }}
+          tag_name: ${{ github.event.inputs.name }}
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
