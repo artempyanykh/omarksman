@@ -9,20 +9,18 @@ on:
 
 jobs:
   build:
-    name: Build the release on ${{ matrix.os.runner }}
-    runs-on: ${{ matrix.os.runner }}
+    name: Build the release on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os:
-          - runner: windows-latest
-            exe: marksman.exe
-          - runner: ubuntu-latest
-            exe: marksman
-          - runner: macos-latest
-            exe: marksman
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
         ocaml-compiler:
           - 4.14.x
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -47,38 +45,38 @@ jobs:
       - name: Upload the binary
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os.runner }}-${{ matrix.os.exe }}
+          name: ${{ matrix.os.runner }}-main.exe
           path: _build/default/bin/main.exe
           if-no-files-found: error
   
   release:
     name: Create the release for ${{ matrix.os.runner }}
     needs: build
-    runs-on: ${{ matrix.os.runner }}
+
     strategy:
       matrix:
         os:
           - runner: windows-latest
-            exe: main.exe
             release_exe: marksman.exe
           - runner: ubuntu-latest
-            exe: main.exe
             release_exe: marksman-linux
           - runner: macos-latest
-            exe: main.exe
             release_exe: marksman-macos
+
+    runs-on: ${{ matrix.os.runner }}
+
     steps:
       - id: download
         name: Download the release binary
         uses: actions/download-artifact@v2
         with:
-          name: ${{ matrix.os.runner }}-${{ matrix.os.exe }}
+          name: ${{ matrix.os.runner }}-main.exe
 
       - name: Rename the binary
         shell: python
         run: |
           import os
-          os.rename("${{ matrix.os.exe }}", "${{ matrix.os.release_exe }}")
+          os.rename("main.exe", "${{ matrix.os.release_exe }}")
       - name: Create a GH release
         uses: softprops/action-gh-release@v1
         with:
