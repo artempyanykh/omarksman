@@ -1,4 +1,5 @@
-(** Markdown LSP server for easy note-taking with cross-references and diagnostics *)
+(** Markdown LSP server for easy note-taking with cross-references and
+    diagnostics *)
 
 module Config = Config
 module Error = Error
@@ -8,4 +9,6 @@ val greet : string -> string
 
     {4 Examples}
 
-    {[ print_endline @@ greet "Jane" ]} *)
+    {[
+      print_endline @@ greet "Jane"
+    ]} *)
