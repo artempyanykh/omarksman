@@ -18,7 +18,7 @@ jobs:
           - windows-latest
 
         ocaml-compiler:
-          - 4.13.x
+          - 4.14.x
 
     runs-on: ${{ matrix.os }}
 
@@ -31,7 +31,7 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          dune-cache: ${{ matrix.os != 'macos-latest' }}
+          dune-cache: ${{ matrix.os == 'ubuntu-latest' }}
 
       - name: Install ocamlformat
         run: opam install ocamlformat.0.21.0
