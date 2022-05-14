@@ -59,13 +59,13 @@ jobs:
       matrix:
         os:
           - runner: windows-latest
-            exe: marksman.exe
+            exe: main.exe
             release_exe: marksman.exe
           - runner: ubuntu-latest
-            exe: marksman
+            exe: main.exe
             release_exe: marksman-linux
           - runner: macos-latest
-            exe: marksman
+            exe: main.exe
             release_exe: marksman-macos
     steps:
       - id: download
