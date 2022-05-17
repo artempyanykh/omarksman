@@ -1,32 +1,10 @@
-# marksman
+# O, marksman!
 
-[![Actions Status](https://github.com/artempyanykh/marksman/workflows/CI/badge.svg)](https://github.com/artempyanykh/marksman/actions)
+[![Actions Status](https://github.com/artempyanykh/marksman/workflows/CI/badge.svg)](https://github.com/artempyanykh/omarksman/actions)
 
-Markdown LSP server for easy note-taking with cross-references and diagnostics
+Markdown LSP server for easy note-taking with cross-references and diagnostics.
 
-## Features
-
-- Available on all major platform (Windows, Linux and Windows)
-
-## Installation
-
-### Using Opam
-
-```bash
-opam install marksman
-```
-
-### Using a script
-
-```bash
-curl -fsSL https://github.com/artempyanykh/marksman/raw/main/script/install.sh | bash
-```
-
-## Usage
-
-### `marksman hello NAME`
-
-Greets the name given in argument.
+This is a spin-off experimental reimplementation of [marksman](https://github.com/artempyanykh/marksman) in OCaml.
 
 ## Contributing
 
