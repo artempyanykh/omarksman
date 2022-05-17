@@ -1,6 +1,6 @@
 # O, marksman!
 
-[![Actions Status](https://github.com/artempyanykh/marksman/workflows/CI/badge.svg)](https://github.com/artempyanykh/omarksman/actions)
+[![CI](https://github.com/artempyanykh/omarksman/actions/workflows/ci.yml/badge.svg)](https://github.com/artempyanykh/omarksman/actions/workflows/ci.yml)
 
 Markdown LSP server for easy note-taking with cross-references and diagnostics.
 
