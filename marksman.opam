@@ -18,6 +18,8 @@ depends: [
   "cmdliner"
   "logs"
   "fmt"
+  "lsp"
+  "jsonrpc"
 ]
 build: [
   ["dune" "subst"] {pinned}

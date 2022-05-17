@@ -29,4 +29,6 @@
   (odoc :with-doc)
   cmdliner
   logs
-  fmt))
+  fmt
+  lsp
+  jsonrpc))

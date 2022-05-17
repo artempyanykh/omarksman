@@ -22,10 +22,12 @@ let term =
   in
   Fmt_tty.setup_std_outputs ();
   Logs.set_level log_level;
-  Logs.set_reporter (Logs_fmt.reporter ~app:Fmt.stdout ());
+  Logs.set_reporter (Logs_fmt.reporter ~app:Fmt.stderr ());
   0
 
-let error_to_code = function `Missing_env_var _ -> 4
+let error_to_code = function
+  | `Missing_env_var _ -> Cmd.Exit.some_error
+  | `Server_error _ -> Cmd.Exit.internal_error
 
 let handle_errors = function
   | Ok () -> if Logs.err_count () > 0 then 3 else 0
@@ -33,7 +35,4 @@ let handle_errors = function
       Logs.err (fun m -> m "%s" (Marksman.Error.to_string err));
       error_to_code err
 
-let exits =
-  Cmd.Exit.info 3 ~doc:"on indiscriminate errors reported on stderr."
-  :: Cmd.Exit.info 4 ~doc:"on missing required environment variable."
-  :: Cmd.Exit.defaults
+let exits = Cmd.Exit.defaults

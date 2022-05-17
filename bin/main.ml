@@ -1,6 +1,38 @@
 open Cmdliner
 
-let cmds = [ Cmd_hello.cmd ]
+module Cmd_server = struct
+  let run () =
+    try
+      Marksman.start_server ();
+      Ok ()
+    with exn -> Error (Marksman.Error.server_error exn)
+
+  (* Command line interface *)
+
+  open Cmdliner
+
+  let doc = "Start \"Marksman\" LSP server"
+  let sdocs = Manpage.s_common_options
+  let exits = Common.exits
+  let envs = Common.envs
+
+  let man =
+    [
+      `S Manpage.s_description;
+      `P "$(tname) starts and LSP server on stdin/stdout.";
+    ]
+
+  let info = Cmd.info "server" ~doc ~sdocs ~exits ~envs ~man
+
+  let term =
+    let open Common.Syntax in
+    let+ _term = Common.term in
+    run () |> Common.handle_errors
+
+  let cmd = Cmd.v info term
+end
+
+let cmds = [ Cmd_server.cmd ]
 
 (* Command line interface *)
 

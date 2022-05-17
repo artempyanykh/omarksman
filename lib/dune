@@ -1,4 +1,4 @@
 (library
  (name marksman)
  (public_name marksman)
- (libraries))
+ (libraries lsp jsonrpc fmt fmt.tty logs.fmt logs.cli))
